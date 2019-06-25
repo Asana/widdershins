@@ -10,6 +10,8 @@ const fetch = require('node-fetch');
 
 const converter = require('./lib/index.js');
 
+const jptr = require('reftools/lib/jptr.js').jptr;
+
 var argv = require('yargs')
     .usage('widdershins [options] {input-file|url} [[-o] output markdown]')
     .demand(1)
@@ -102,27 +104,93 @@ function doit(s) {
     var api = {};
     try {
         api = yaml.parse(s);
-    }
-    catch(ex) {
+    } catch (ex) {
         console.error('Failed to parse YAML/JSON, falling back to API Blueprint');
         console.error(ex.message);
         api = s;
     }
 
-    converter.convert(api,options,function(err,output){
+    //api = dereference(api, api, "");
+    //var outfilea = argv.outfile || argv._[1];
+    //fs.writeFileSync(path.resolve(outfilea.substring(0, outfilea.length-6) + 'TEST.yaml'), yaml.stringify(api), 'utf8');
+
+    converter.convert(api, options, function (err, output) {
         if (err) {
             console.warn(err);
-        }
-        else {
-            var outfile = argv.outfile||argv._[1];
+        } else {
+            var outfile = argv.outfile || argv._[1];
             if (outfile) {
-                fs.writeFileSync(path.resolve(outfile),output,'utf8');
-            }
-            else {
+                fs.writeFileSync(path.resolve(outfile), output, 'utf8');
+            } else {
                 console.log(output);
             }
         }
     });
+}
+
+
+function dereference(fullObject, current, pathSoFar) {
+    console.log(pathSoFar);
+    let resultObject = null;
+
+    if (Array.isArray(current)) {
+        resultObject = []
+    } else if (typeof current === 'object' && current !== null) {
+        resultObject = {}
+    } else {
+        return current;
+    }
+
+    // Iterate their properties
+    for (let prop in current) {
+        if (!current.hasOwnProperty(prop)) {
+            continue;
+        }
+
+        let value = null;
+
+        if (prop === 'allOf') {
+            for (let i = 0; i < current[prop].length; i++) {
+                value = dereference(fullObject, current[prop][i], path);
+
+                if (resultObject !== null) {
+                    if ('properties' in resultObject && 'properties' in value) {
+                        Object.assign(resultObject.properties, value.properties);
+                        delete value.properties;
+                    }
+                    Object.assign(resultObject, value)
+                } else {
+                    resultObject = value;
+                }
+            }
+            continue;
+        }
+
+        if (prop === '$ref') {
+            value = jptr(fullObject, current[prop]);
+            value = dereference(fullObject, value, path);
+
+            if (resultObject !== null) {
+                Object.assign(resultObject, value)
+            } else {
+                resultObject = value;
+            }
+            continue;
+        }
+
+        let pathWithProp = pathSoFar + '/' + prop;
+
+        // If there's a subObject, iterate on that.
+        if (typeof current[prop] === 'object' && current[prop] !== null) {
+            value = dereference(fullObject, current[prop], pathWithProp);
+        } else {
+            value = current[prop];
+        }
+
+        resultObject[prop] = value;
+    }
+
+    return resultObject;
 }
 
 options.codeSamples = !argv.code;
