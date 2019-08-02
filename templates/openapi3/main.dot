@@ -1,5 +1,6 @@
 <!-- Generator: Widdershins v{{=data.widdershins.version}} -->
 
+<hr class="full-line">
 <h1 id="{{=data.title_prefix}}">API Reference</h1>
 
 > Scroll down for {{? data.header.language_tabs.length}}code samples, {{?}}example requests and responses.{{? data.header.language_tabs.length}} Select a language for code samples from the tabs above or the mobile navigation menu.{{?}}
@@ -31,7 +32,7 @@ Base URLs:
 
 {{ for (var r in data.resources) { }}
 {{ data.resource = data.resources[r]; }}
-
+<hr class="full-line">
 <h1 id="{{=data.title_prefix+'-'+data.utils.slugify(r)}}">{{= r}}</h1>
 
 {{? data.resource.description }}{{= data.resource.description}}{{?}}
@@ -52,10 +53,13 @@ Base URLs:
 
 {{? data.api.components && data.api.components.schemas }}
 
+<hr class="full-line">
+
 # Schemas
 
 {{ for (var s in data.components.schemas) { }}
 {{ if (s.startsWith('Asana') || s.endsWith('Object') || s.endsWith('Array')) { continue; } }}
+<hr>
 {{ var origSchema = data.components.schemas[s]; }}
 {{ var schema = data.api.components.schemas[s]; }}
 
