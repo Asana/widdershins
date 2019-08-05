@@ -32,8 +32,15 @@ Base URLs:
 
 {{ for (var r in data.resources) { }}
 {{ data.resource = data.resources[r]; }}
+
+
 <hr class="full-line">
 <h1 id="{{=data.title_prefix+'-'+data.utils.slugify(r)}}">{{= r}}</h1>
+
+{{ var first = true; }}
+<pre class="highlight http tab-http">
+<code>{{ for (var m in data.resource.methods) { data.operationUniqueName = m; data.method = data.resource.methods[m]; data.operationUniqueSlug = data.method.slug; data.operation = data.method.operation; }}{{ if (first) { first = false; } else { }}<br>{{ } }}<span class="nf">{{=data.method.verb.toUpperCase()}}</span> <span class=""nn>/api/1.1{{=data.method.path}}</span>{{ } /* of methods */ }}</code>
+</pre>
 
 {{? data.resource.description }}{{= data.resource.description}}{{?}}
 
