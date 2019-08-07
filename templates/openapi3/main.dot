@@ -39,7 +39,7 @@ Base URLs:
 
 {{ var first = true; }}
 <pre class="highlight http tab-http">
-<code>{{ for (var m in data.resource.methods) { data.operationUniqueName = m; data.method = data.resource.methods[m]; data.operationUniqueSlug = data.method.slug; data.operation = data.method.operation; }}{{ if (first) { first = false; } else { }}<br>{{ } }}<span class="nf">{{=data.method.verb.toUpperCase()}}</span> <span class=""nn>{{=data.method.path}}</span>{{ } /* of methods */ }}</code>
+<code>{{ for (var m in data.resource.methods) { data.operationUniqueName = m; data.method = data.resource.methods[m]; data.operationUniqueSlug = data.method.slug; data.operation = data.method.operation; }}{{ if (first) { first = false; } else { }}<br>{{ } }}<a href="#{{=data.operationUniqueName.toLowerCase().replaceAll("'","-39-").replaceAll(" ","-")}}"><span class="{{=data.method.verb.toLowerCase()}}-verb">{{=data.method.verb.toUpperCase()}}</span> <span class=""nn>{{=data.method.path}}</span></a>{{ } /* of methods */ }}</code>
 </pre>
 
 {{? data.resource.description }}{{= data.resource.description}}{{?}}
