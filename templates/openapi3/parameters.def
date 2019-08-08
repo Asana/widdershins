@@ -9,7 +9,7 @@
 {{ data.longDescs = false; }}
 {{~ data.parameters :p}}
 {{? p.shortDesc !== p.description && p.name !== 'opt_pretty' && p.name !== 'opt_fields' &&
-  p.name !== 'opt_expand' && p.name !== 'limit' && p.name !== 'offset' && p.name !== 'data'}}
+  p.name !== 'opt_expand' && p.name !== 'limit' && p.name !== 'offset' && p.name.replaceAll("»","").trim() !== 'data'}}
 {{ data.longDescs = true; }}
 {{?}}
 {{~}}
