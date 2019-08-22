@@ -35,7 +35,7 @@
 > {{= data.bodyParameter.exampleValues.description }}
 {{?}}
 
-{{= data.utils.getBodyParameterExamples(data) }}
+{{= data.utils.getBodyParameterExamples(data).replaceAll('"...": "..."', '...').replaceAll('"..."', '...') }}
 {{?}}
 
 {{? data.parameters && data.parameters.length }}
