@@ -33,7 +33,6 @@ Base URLs:
 {{ for (var r in data.resources) { }}
 {{ data.resource = data.resources[r]; }}
 
-
 <hr class="full-line">
 <h1 id="{{=data.title_prefix+'-'+data.utils.slugify(r)}}">{{= r}}</h1>
 
@@ -79,10 +78,10 @@ Base URLs:
 
 {{? data.options.yaml }}
 ```yaml
-{{=data.utils.yaml.stringify(data.utils.getSample(schema,data.options,{},data.api))}}
+{{=data.utils.yaml.stringify(data.utils.getSample(schema,data.options,{quiet:true},data.api))}}
 {{??}}
 ```json
-{{=data.utils.safejson(data.utils.getSample(schema,data.options,{},data.api),null,2).replaceAll('"...": "..."', '...').replaceAll('"..."', '...')}}
+{{=data.utils.safejson(data.utils.getSample(schema,data.options,{quiet:true},{},data.api),null,2).replaceAll('"...": "..."', '...').replaceAll('"..."', '...')}}
 {{?}}
 ```
 

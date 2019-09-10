@@ -3,6 +3,10 @@
 {{ data.messageName = data.message["x-widdershins-oldRef"].split('/').pop(); }}
 {{?}}
 {{?}}
+<<<<<<< HEAD
+=======
+{{= data.tags.section }}
+>>>>>>> fc9415fc08083f7e5bc4dfc306aba1671cf9f970
 <h3 id="{{=data.utils.slugify(data.topicName)}}-{{=data.messageName}}">{{=data.messageName}}</h3>
 
 {{? data.message.deprecated}}Note: **Deprecated**{{?}}
@@ -11,7 +15,7 @@
 > Example headers
 
 ```json
-{{ data.headers = JSON.stringify(data.utils.getSample(data.message.headers,data.options,{},data.api),null,2); }}
+{{ data.headers = JSON.stringify(data.utils.getSample(data.message.headers,data.options,{quiet:true},data.api),null,2); }}
 {{= data.headers }}
 ```
 {{?}}
@@ -20,7 +24,7 @@
 > Example payload
 
 ```json
-{{ data.payload = JSON.stringify(data.utils.getSample(data.message.payload,data.options,{},data.api),null,2); }}
+{{ data.payload = JSON.stringify(data.utils.getSample(data.message.payload,data.options,{quiet:true},data.api),null,2); }}
 {{= data.payload }}
 ```
 {{?}}
@@ -81,3 +85,8 @@
 {{??}}
 {{#def.authentication_none}}
 {{?}}
+<<<<<<< HEAD
+=======
+
+{{= data.tags.endSection }}
+>>>>>>> fc9415fc08083f7e5bc4dfc306aba1671cf9f970
