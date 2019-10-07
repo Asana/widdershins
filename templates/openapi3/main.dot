@@ -60,7 +60,7 @@ Base URLs:
 # Schemas
 
 {{ for (var s in data.components.schemas) { }}
-{{ if (s.startsWith('Asana') || s.endsWith('Object') || s.endsWith('Array')) { continue; } }}
+{{ if (s.startsWith('Asana') || s.endsWith('Object') || s.endsWith('Array') || s.endsWith('override')) { continue; } }}
 <hr>
 {{ var origSchema = data.components.schemas[s]; }}
 {{ var schema = data.api.components.schemas[s]; }}
