@@ -77,7 +77,7 @@ Base URLs:
 {{=data.utils.yaml.stringify(data.utils.getSample(schema,data.options,{quiet:true},data.api))}}
 {{??}}
 ```json
-{{=data.utils.safejson(data.utils.getSample(schema,data.options,{quiet:true},{},data.api),null,2).replaceAll('"...": "..."', '...').replaceAll('"..."', '...')}}
+{{=data.utils.safejson(data.utils.getSample(schema,data.options,{quiet:true},data.api),null,2).replaceAll('"...": "..."', '...').replaceAll('"..."', '...')}}
 {{?}}
 ```
 
